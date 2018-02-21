@@ -1,0 +1,6 @@
+em {
+    color: #0000ff;
+}
+em em {
+    color: #ff0000
+}
