@@ -1,0 +1,12 @@
+body {
+    background: url("listki.gif");
+    background-repeat: repeat-y;
+}
+div:first-child::first-letter {
+    background: url("R.gif")
+}
+div {
+    border: 3px solid black;
+    margin-left: 100px;
+    padding: 10px;
+}
