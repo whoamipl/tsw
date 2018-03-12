@@ -1,0 +1,27 @@
+.A {
+    position: relative;
+    left: 50px;
+}
+
+.B {
+    position: relative;
+    bottom: 30px;
+    left: 50px;
+}
+
+/* position absolute and then top: 50% and left: 50% 
+   places the top edge at vertically center of the screen
+   and left edge horizontally center, so we must set top and 
+   left margin to -1 * width/2 and top -1 * heigth/2 
+*/
+.C {
+    position: absolute;
+    top:50%;
+    left: 50%;
+    margin: -50px 0px 0px -300px;
+    width: 600px;
+    height: 100px;
+    border: 1px solid red;
+    background-color: bisque;
+}
+
