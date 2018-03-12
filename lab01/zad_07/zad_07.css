@@ -1,11 +1,13 @@
 .A {
-
+    position: relative;
+    left: 50px;
 }
 
 .B {
-
+    position: relative;
+    top: -10px;
+    left: 50px;
 }
 
 .C {
-    
 }
