@@ -1,0 +1,21 @@
+#menu {
+    border: outset 3px black;
+    text-align: center;
+    padding: 10px;
+    background: lightgray;
+}
+
+a {
+    text-decoration: none;
+    color: brown;
+}
+
+.el_menu {
+    border: solid 1px black;
+    padding: 5px;
+    background: lightgray;
+}
+
+.el_menu:hover {
+    background: white;
+}
