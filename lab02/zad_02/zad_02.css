@@ -1,0 +1,16 @@
+#menu {
+  position: fixed;
+  border: outset 3px black;
+  padding: 10px;
+  background: lighgray;
+}
+.el_menu {
+  border: solid 1px black;
+}
+.el_menu:hover {
+  background: lighter(lighgray, 40%);
+}
+a {
+  text-decoration: none;
+  color: brown;
+}

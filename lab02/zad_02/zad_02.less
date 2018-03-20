@@ -1,0 +1,22 @@
+@link-color: lighgray;
+@el-color-hover: lighter(@link-color, 40%);
+
+#menu {
+    position: fixed;
+    border: outset 3px black;
+    padding: 10px;
+    background: @link-color;
+}
+
+.el_menu {
+    border: solid 1px black;
+}
+
+.el_menu:hover {
+    background: @el-color-hover
+}
+
+a {
+    text-decoration: none;
+    color: brown;
+}
