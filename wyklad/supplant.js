@@ -5,5 +5,5 @@ String.prototype.supplant = function (data) {
 			var pattern = new RegExp('{' + propName + '}','g');
 			output = output.replace(pattern, propValue);
 		})
-    return output;
+  return output;
 }
