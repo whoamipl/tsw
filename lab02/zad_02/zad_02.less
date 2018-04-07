@@ -1,11 +1,13 @@
 @link-color: lightgray;
 @el-color-hover: lighter(@link-color, 40%);
-
-#menu {
-    position: fixed;
+.justyfiy() {
     left: 0;
     right: 0;
+}
+#menu {
+    .justyfiy;
     top: 0;
+    position: fixed;
     height: 20px;
     border: outset 3px black;
     padding: 10px;
@@ -29,8 +31,7 @@ a {
 
 #tresc {
     position: relative;
-    left: 0;
-    right: 0;
+    .justyfiy;
     top: 30px;
     z-index: 2;
 }
