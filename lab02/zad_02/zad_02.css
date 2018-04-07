@@ -1,16 +1,29 @@
 #menu {
   position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 20px;
   border: outset 3px black;
   padding: 10px;
-  background: lighgray;
+  background-color: lightgray;
+  z-index: 3;
 }
 .el_menu {
   border: solid 1px black;
+  padding: 5px;
 }
 .el_menu:hover {
-  background: lighter(lighgray, 40%);
+  background-color: lighter(lightgray, 40%);
 }
 a {
   text-decoration: none;
   color: brown;
+}
+#tresc {
+  position: relative;
+  left: 0;
+  right: 0;
+  top: 30px;
+  z-index: 2;
 }
