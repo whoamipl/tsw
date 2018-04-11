@@ -1,0 +1,63 @@
+@div-color: lighten(gray, 20%);
+@body-color: lightgray;
+@div-color-hover: lighten(@body-color, 40%); 
+@border-props: 1px solid black;
+
+.header-foot-div() {
+    left: 5px;
+    height: 30px;
+    width: 400px;
+    background-color: @div-color;
+    position: fixed;
+    z-index: 3;
+}
+body {
+    background-color: @body-color;
+}
+
+#menu {
+    position: relative;
+    top: 20px;
+    bottom: 20px;
+    float: left;
+    width: 20%;
+    text-align: center;
+    z-index: 2;
+    .el_menu {
+        display: block;
+        width: 200px;
+        border: 1px solid black;
+        color: @body-color;
+        margin: 5px;
+        &:hover {
+            background-color: @div-color-hover;
+        }
+        a {
+            text-decoration: none;
+            color: brown;
+        }
+    }
+}
+
+#tresc {
+    position: relative;
+    border-left: 5px solid gray;
+    top: 20px;
+    bottom: 20px;
+    float: right;
+    width: 75%;
+    z-index: 2;
+    padding: 5px;
+    #naglowek {
+        top: 0;
+        .header-foot-div;
+        border-bottom: @border-props;
+        
+    }
+    #stopka {
+        .header-foot-div;
+        position: fixed;
+        bottom: 0px;
+        border-top: @border-props;
+    }
+}

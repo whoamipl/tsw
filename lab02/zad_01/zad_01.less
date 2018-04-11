@@ -1,11 +1,15 @@
 @div-width: 300px;
 @div-height: 100px;
+
+.my-border(@color) {
+    border: solid 1px @color;
+}
 body {
     background-color: whitesmoke;
 }
 .A {
     background-color: yellow;
-    border: solid 1px red; 
+    .my-border(red);
     width: @div-width;
     height: @div-height;
     position: absolute;
@@ -15,7 +19,7 @@ body {
 }
 .B {
     background-color: white;
-    border: solid 1px blue;
+    .my-border(blue);
     width: @div-width;
     height: @div-height;
     position: absolute;

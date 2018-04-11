@@ -1,0 +1,56 @@
+body {
+  background-color: lightgray;
+}
+#menu {
+  position: relative;
+  top: 20px;
+  bottom: 20px;
+  float: left;
+  width: 20%;
+  text-align: center;
+  z-index: 2;
+}
+#menu .el_menu {
+  display: block;
+  width: 200px;
+  border: 1px solid black;
+  color: lightgray;
+  margin: 5px;
+}
+#menu .el_menu:hover {
+  background-color: #ffffff;
+}
+#menu .el_menu a {
+  text-decoration: none;
+  color: brown;
+}
+#tresc {
+  position: relative;
+  border-left: 5px solid gray;
+  top: 20px;
+  bottom: 20px;
+  float: right;
+  width: 75%;
+  z-index: 2;
+  padding: 5px;
+}
+#tresc #naglowek {
+  top: 0;
+  left: 5px;
+  height: 30px;
+  width: 400px;
+  background-color: #b3b3b3;
+  position: fixed;
+  z-index: 3;
+  border-bottom: 1px solid black;
+}
+#tresc #stopka {
+  left: 5px;
+  height: 30px;
+  width: 400px;
+  background-color: #b3b3b3;
+  z-index: 3;
+  position: fixed;
+  bottom: 0px;
+  border-top: 1px solid black;
+}

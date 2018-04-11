@@ -1,5 +1,6 @@
 @link-color: lightgray;
 @el-color-hover: lighter(@link-color, 40%);
+
 .justyfiy() {
     left: 0;
     right: 0;
@@ -18,10 +19,9 @@
 .el_menu {
     border: solid 1px black;
     padding: 5px;
-}
-
-.el_menu:hover {
-    background-color: @el-color-hover
+    &:hover {
+        background-color: @el-color-hover
+    }
 }
 
 a {
