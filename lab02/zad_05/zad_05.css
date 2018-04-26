@@ -1,0 +1,47 @@
+#strona {
+  margin-left: auto;
+  margin-right: auto;
+  background-color: whitesmoke;
+  height: 80%;
+  width: 80%;
+}
+#strona #naglowek {
+  height: 30px;
+  background-color: #b3b3b3;
+  border-bottom: solid 1px black;
+}
+#strona #stopka {
+  clear: both;
+  height: 30px;
+  background-color: #b3b3b3;
+  border-top: solid 1px black;
+  bottom: 0px;
+}
+#strona #tresc {
+  width: 75%;
+  padding: 5px;
+  border-left: solid 5px gray;
+  float: inline-end;
+}
+#strona #menu {
+  margin-left: auto;
+  margin-top: 50px;
+  float: inline-start;
+  height: 100%;
+  width: 20%;
+}
+#strona #menu .el_menu {
+  color: gray;
+  position: relative;
+  left: 30px;
+  display: block;
+  background-color: lightgrey;
+  padding: 5px;
+  border: solid 1px black;
+}
+#strona #menu .el_menu a {
+  text-decoration: none;
+}
+#strona #menu .el_menu:hover {
+  background-color: white;
+}

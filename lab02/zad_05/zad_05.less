@@ -1,0 +1,54 @@
+@header-color: lighten(grey,20%);
+@border: solid 1px black;
+.center() {
+    margin-left: auto;
+    margin-right: auto;
+}
+#strona {
+    .center;
+    background-color: whitesmoke;
+    height: 80%;
+    width: 80%;
+    #naglowek {
+       height: 30px;
+       background-color: @header-color;
+       border-bottom: @border;
+    }
+    #stopka {
+        clear: both;
+        height: 30px;
+        background-color: @header-color;
+        border-top: @border;
+        bottom: 0px;
+    }
+    #tresc {
+        width: 75%;
+        padding: 5px;
+        border-left: solid 5px gray;
+        float: inline-end;
+    }
+    #menu {
+        margin-left: auto;
+        margin-top: 50px;
+        float: inline-start;
+        height: 100%;
+        width: 20%;
+        .el_menu {
+           color: gray;
+           position: relative;
+           left: 30px;
+           display: block;
+           background-color: lightgrey;
+           padding: 5px;
+           border: @border;
+            a {
+                text-decoration: none;
+                
+            }
+            &:hover {
+                background-color: white;
+            }
+      
+        }
+    }
+}
