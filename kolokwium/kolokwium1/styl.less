@@ -1,0 +1,74 @@
+// out: styl.css, compress: true
+@zaw-bg-col: whitesmoke;
+@black-border: solid 1px black;
+.mr-top() {
+    margin-top: 10px;
+}
+.highlight {
+    background-color: yellow; 
+}
+body {
+    display: flex;
+    justify-content: flex-start;
+    #zawodnicy {
+        padding: 10px;
+        #lista {
+            list-style-type: none;
+            li {
+                text-align: left;
+                min-width: 140px;
+            }
+        }      
+        border: outset 1px darken(@zaw-bg-col, 20%);
+        background-color: @zaw-bg-col;
+    }
+
+    #pojemnik {
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 350px;
+        #zawodnik {
+            color: grey;
+            text-align: center;
+            font-size: 24pt;
+            align-self: stretch;
+            height: 50px;
+            background: skyblue;
+        }
+        #wyniki {
+            background-color: darken(@zaw-bg-col, 40%);
+            text-align: center;
+            margin-top: 10px;
+            span {
+                margin: auto, 0;
+            }
+            input {
+                border: @black-border;
+                background-color: lightgray;
+                font-size: 24px;
+                .mr-top;
+                margin-bottom: 5px;
+                padding: 5px;
+                width: 50px;
+                height: 40px;
+            }
+            #srednia {
+                position: relative;
+                left: 25%;
+                margin-bottom: 10px;
+                border: @black-border;
+                width: 150px;
+                height: 50px;
+                color: darkred;
+                background-color: lightgrey;
+            }
+
+            #zapisz {
+                .mr-top;
+            }
+        }
+    }
+}
