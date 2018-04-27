@@ -88,7 +88,8 @@ function init() {
 
     document.querySelectorAll('input')
             .forEach((elem) => { elem.addEventListener('click', toggle); });
-    document.querySelectorAll('input').forEach(elem => { elem.setAttribute('maxlength','2');});
+    document.querySelectorAll('input')
+            .forEach(elem => { elem.setAttribute('maxlength','2');});
     document.querySelectorAll('input')
             .forEach((elem) => { elem.addEventListener('keypress', validate); });
     document.getElementById('wyniki').addEventListener('keydown', calcAvg);     
@@ -106,6 +107,10 @@ function validate(e) {
 function calcAvg(e) {
     console.log(e);
     if (9 == e.keyCode) {
-        console.log(document.getElementById('zawodnik').id);
+        let player = lista
+            .find((element) => element.name === document.getElementById('zawodnik').innerHTML);
+        player.avg.push()
     }
+    document.getElementById('srednia').innerText = player.avg => player.avg.reduce( ( p, c ) => p + c, 0 ) / arr.length;
 } 
+
