@@ -109,8 +109,8 @@ function calcAvg(e) {
     if (9 == e.keyCode) {
         let player = lista
             .find((element) => element.name === document.getElementById('zawodnik').innerHTML);
-        player.avg.push()
+        player.avg.push();
     }
-    document.getElementById('srednia').innerText = player.avg => player.avg.reduce( ( p, c ) => p + c, 0 ) / arr.length;
+    document.getElementById('srednia').innerText = player.avg.reduce( ( p, c ) => p + c, 0 ) / player.avg.length;
 } 
 
