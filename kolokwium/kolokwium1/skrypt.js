@@ -34,6 +34,13 @@ document.onreadystatechange = () => {
     }
 };
 
+function addIdToInputs() {
+    let inputs = document.querySelectorAll('input');
+    let ids = new Uint32Array(inputs.length);
+    window.crypto.getRandomValues(ids);
+    inputs
+        .forEach((input, index) => input.setAttribute('id', ids[index]));
+}
 function preparePlayers() {
     
 }
@@ -43,36 +50,31 @@ function clearHighligt() {
     .forEach((elem) => {
         elem.classList.remove('highlight'); 
     });
-    document.querySelectorAll('input')
-    .forEach((elem) => {
-        elem.classList.remove('highlight'); 
-    });
 }
 
 function toggle(e) {
-    console.log(e.target);
-    if (e.target.isPlayer) {
-        document.getElementById('zawodnik').innerText = e.target.innerHTML;
-        document.querySelectorAll('li')
-        .forEach((elem) => {
-            elem.classList.remove('highlight'); 
-        });
-    } else {
-        document.querySelectorAll('input')
-        .forEach((elem) => {
-            elem.classList.remove('highlight'); 
-        });
-    }
+    clearHighligt();
+    document.getElementById('zawodnik').innerText = e.target.innerText;
     if (e.target.classList.contains('highlight'))
         e.target.classList.remove('highlight');
     else    
         e.target.classList.add('highlight');
-   
+    console.log(getPlayer().shouldBeSaved);
+    if (!getPlayer().shouldBeSaved) {
+        document.querySelectorAll('input').forEach( input => input.value = '');
+        getPlayer().scores.clear();
+    } else {
+        getPlayer().scores.forEach((value, key) => {
+        document.getElementById(key).value = value;
+    });
+    }
 }
 
 function init() {
+    addIdToInputs();
     let list = document.getElementById('lista');
     let avg = document.createElement('div');
+    let save = document.getElementById('zapisz');
     avg.id = 'srednia';
     document.getElementById('wyniki').appendChild(avg);
     lista
@@ -83,11 +85,13 @@ function init() {
             listElement.isPlayer = true;
             listElement.addEventListener('click', toggle);
             list.appendChild(listElement);
-            obj.avg = [];
+            obj.scores = new Map();
+            obj.shouldBeSaved = false;
         });
-
-    document.querySelectorAll('input')
-            .forEach((elem) => { elem.addEventListener('click', toggle); });
+    save.addEventListener('click', function () {
+        getPlayer().shouldBeSaved = true;
+        console.log(getPlayer());
+    });
     document.querySelectorAll('input')
             .forEach(elem => { elem.setAttribute('maxlength','2');});
     document.querySelectorAll('input')
@@ -105,12 +109,19 @@ function validate(e) {
 }
 
 function calcAvg(e) {
-    console.log(e);
     if (9 == e.keyCode) {
-        let player = lista
-            .find((element) => element.name === document.getElementById('zawodnik').innerHTML);
-        player.avg.push();
+        player = getPlayer();
+        player.scores.set(e.target.id, parseInt(e.target.value));
+        console.log(e.target);
+        console.log(player.scores);
     }
-    document.getElementById('srednia').innerText = player.avg.reduce( ( p, c ) => p + c, 0 ) / player.avg.length;
+    console.log(Array.from(player.scores.values()));
+    console.log(player.scores.size);
+    document.getElementById('srednia').innerText = 
+        Array.from(player.scores.values()).reduce((p, c) => p + c, 0 )  / player.scores.size;
 } 
+
+function getPlayer() {
+   return lista.find((element) => element.name === document.getElementById('zawodnik').innerHTML);
+}
 
