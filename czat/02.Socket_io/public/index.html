@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Czat</title>
+  <meta charset="UTF-8">
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="js/skrypt.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div id="container">
+    <table>
+      <tr>
+        <td> <img id="status" src="img/bullet_red.png" width="35"> </td>
+        <td> <input id="open" type="button" value="Połącz"> </td>
+        <td> <input id="close" type="button" value="Rozłącz"> </td>
+      </tr>
+      <tr>
+        <label for="username">Nazwa użytkownika.</label><input type="text" id="username">
+      </tr>
+    </table>
+    <div id="chat-window">
+      Czat:&nbsp;
+      <p id="message"></p>
+    </div>
+    <div id="inputs">
+      <input id="text">&nbsp;<input id="send" type="button" value="Wyślij">
+    </div>
+  </div>
+</body>
+
+</html>
