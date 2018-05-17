@@ -1,0 +1,21 @@
+body #banner {
+  border: solid black 1px;
+  background-color: gray;
+  margin: 10px;
+  max-height: 150px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+body #menu {
+  float: left;
+  margin-left: 10px;
+  border: solid black 1px;
+  background-color: lightgrey;
+  height: 100px;
+}
+body #tresc {
+  float: right;
+  margin-left: 10px;
+  border: solid black 1px;
+  height: 100px;
+}

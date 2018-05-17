@@ -1,0 +1,11 @@
+body #banner {
+  border: solid black 1px;
+  background-color: gray;
+}
+body #menu {
+  border: solid black 1px;
+  background-color: lightgrey;
+}
+body #tresc {
+  border: solid black 1px;
+}

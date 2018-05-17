@@ -24,16 +24,16 @@
   float: inline-end;
 }
 #strona #menu {
-  margin-left: auto;
+  position: relative;
+  left: 25px;
   margin-top: 50px;
   float: inline-start;
   height: 100%;
   width: 20%;
 }
 #strona #menu .el_menu {
+  text-align: center;
   color: gray;
-  position: relative;
-  left: 30px;
   display: block;
   background-color: lightgrey;
   padding: 5px;
@@ -41,6 +41,7 @@
 }
 #strona #menu .el_menu a {
   text-decoration: none;
+  color: black;
 }
 #strona #menu .el_menu:hover {
   background-color: white;
