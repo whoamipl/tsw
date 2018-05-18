@@ -1,0 +1,34 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body form {
+  background: #2c3d55;
+  padding: 5px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+body form input {
+  border: 0;
+  padding: 10px;
+  width: 90%;
+  margin-right: .5%;
+  background-color: #cfcce0;
+}
+body form button {
+  width: 9%;
+  background-color: #6a687a;
+}
+body form #messages {
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+}
+body form #messages li {
+  padding: 5px, 10px;
+}
+body form #messages li:nth-child(odd) {
+  background-color: #aba9ba;
+}
