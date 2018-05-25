@@ -10,11 +10,21 @@
     <title>Czat</title>
 </head>
 <body>
-    <ul id="messages">
-
-    </ul>
+    <div id="login-form">
+            <input id="username" type="text"/> <button id="login">Log in</button>
+    </div>
+    <div id="room-form">
+        <input id="room" type="text"/>
+        <button id="add-room">Add room</button>
+        <ul id="room-list">
+            <h4>Rooms</h4>
+        </ul>
+    </div>
     <form id="chat-form">
-        <input id="m" type="text"/> <button>Send</button>
+            <ul id="messages"></ul>
+            <ul id="active-users">
+            </ul>
+        <input id="m" type="text"/> <button id="send" >Send</button>
     </form>
 </body>
 </html>
