@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/script.js"></script>
+    <title>Czat</title>
+</head>
+<body>
+    <div id="login-form">
+            <input id="username" type="text" placeholder="Username"/> <button id="login-btn">Log in</button>
+            <input id="room" type="text" placeholder="Room"/>   <button id="logout-btn">Log out</button>
+    </div>
+    <div id="room-form">
+        <ul id="room-list">
+            <h4>Rooms</h4>
+        </ul>
+    </div>
+    <form id="chat-form">
+            <ul id="messages"></ul>
+            <ul id="active-users">
+            </ul>
+        <input id="m" type="text"/> <button id="send" >Send</button>
+    </form>
+</body>
+</html>
