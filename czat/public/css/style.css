@@ -106,6 +106,7 @@ body form {
   border-radius: 5px;
 }
 body form #messages {
+  overflow: auto;
   background-color: #cfcce0;
   position: absolute;
   height: 80%;

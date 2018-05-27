@@ -14,7 +14,7 @@ roomList.forEach((room) => {
 });
 
 roomList.forEach(room => {
-    messagesHistory.set(room, []);
+    messagesHistory.set(room, ['null']);
 });
 
 io.on('connection', (socket) => {
@@ -29,10 +29,11 @@ io.on('connection', (socket) => {
                 socket.emit('userExist');
             } else {
                 usersInRooms.get(user.room).push(newUser.name);
+                if (!messagesHistory.get(user.room))
+                    messagesHistory.set(user.room, []);
             }
         } else {
             usersInRooms.set(user.room, [user.room]);
-            console.log(usersInRooms.get(user.room));
         }
 
         if (roomList.includes(user.room)) {
@@ -43,17 +44,28 @@ io.on('connection', (socket) => {
             socket.room = user.room;
             socket.join(user.room);
         }
-        
-        console.log(roomList);
+
         io.emit('setRooms', roomList);
         io.in(user.room).emit('setRoom', user.room);
         io.in(user.room).emit('updateUserList', usersInRooms.get(user.room));
         console.log('New user conected to room: ' + user.room);
-        
+
+        socket.on('newInThisRoom', () => {
+            if (messagesHistory.get(user.room).length <= 10) {
+                socket.emit('updateMeassageHistory', messagesHistory.get(user.room));
+            } else {
+                let startFrom = messagesHistory.get(user.room).length - 10;
+                console.log(messagesHistory.get(user.room).filter( (e,i) => i >= startFrom));
+                socket.emit('updateMeassageHistory',
+                messagesHistory.get(user.roomName).filter( (e,i) => i >= startFrom) );
+            }
+        });
+
         socket.on('chat message', (msg) => {
-            console.log('Room: ' + user.room);
-            console.log('message: ' + user.name + ":" + msg);
-            io.in(user.room).emit('chat message', user.name + ": " + msg);
+            let message = user.name + ": " + msg;
+            messagesHistory.get(user.room).push(message);
+            console.log('Message history: ' + messagesHistory.get(user.room));
+            io.in(user.room).emit('chat message', message);
         });
     
         socket.on('disconnect', () => {

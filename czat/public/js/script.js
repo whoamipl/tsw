@@ -4,6 +4,7 @@ function getById(id) {
 }
 
 document.onreadystatechange = () => {
+    let messageHistory = new Map();
     if (document.readyState === "interactive") {
         let socket;
         let form = getById('chat-form');
@@ -19,10 +20,19 @@ document.onreadystatechange = () => {
         let roomInput = getById('room');
         let defaultRoom = 'Room1';
         let user = {name: '', room: ''};
-        
+        let visitedRooms = [];
+
         sendBtn.disabled = true;
         loginBtn.disabled = false;
         logoutBtn.disabled = true;
+
+        let setMessage = (msg) =>  {
+            let listElement = document.createElement('li');
+            listElement.innerText = msg;
+            messages.appendChild(listElement);
+            if (messageHistory.get(user.room))
+                messageHistory.get(user.room).push(msg);
+        };
 
         loginBtn.addEventListener('click', () => {
            
@@ -41,20 +51,25 @@ document.onreadystatechange = () => {
                 user.room = "Room1";
                 alert('Joining to default room!');
                 console.log("Set user room to: " + user.room);
-            }
-
+            } 
+            
             loginBtn.disabled = true;
             sendBtn.disabled = false;
             logoutBtn.disabled = false;
 
             socket = io();
             socket.emit('newUserConnected', user);
-        
+            
             logoutBtn.addEventListener('click', () => {
                 socket.emit('userDisconnected', user);
             });
 
             socket.on('setRooms', rooms => {
+                if (!visitedRooms.includes(user.room)) {
+                    socket.emit('newInThisRoom', user.room);
+                    visitedRooms.push(user.room);
+                }
+
                 while(roomList.firstChild) {
                     roomList.removeChild(roomList.firstChild);
                 }
@@ -69,11 +84,12 @@ document.onreadystatechange = () => {
                     roomList.appendChild(listElement); 
                 });
             });
-
+            
             socket.on('chat message', (msg) => {
-                let listElement = document.createElement('li');
-                listElement.innerText = msg;
-                messages.appendChild(listElement);
+                if (messages.childElementCount > 20) {
+                    console.log(messages.firstChild);
+                }
+                setMessage(msg);
             });
 
             socket.on('updateUserList', (activeUsers) => {
@@ -92,6 +108,10 @@ document.onreadystatechange = () => {
             socket.on('userExist', () => {
                 alert('Taki użytkownik istnieje!');
                 socket.disconnect();
+            });
+
+            socket.on('updateMeassageHistory', (history) => {
+                history.forEach( msg => setMessage(msg));
             });
         });
 
