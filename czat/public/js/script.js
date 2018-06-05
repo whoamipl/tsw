@@ -73,6 +73,7 @@ document.onreadystatechange = () => {
                 while(roomList.firstChild) {
                     roomList.removeChild(roomList.firstChild);
                 }
+                
                 rooms.forEach( r => {
                     let listElement = document.createElement('li');
                     let roomButton = document.createElement('button');

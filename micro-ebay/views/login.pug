@@ -1,0 +1,11 @@
+extends layout
+block content
+  .container
+    if (message)
+        div.alert.alert-danger #{message}
+    form.form-signin(role='form', action='/login', method='post')
+      h2.form-signin-heading Logowanie
+      label.sr-only(for='inputEmail')
+      input.form-control(type='text', name='username', id='inputEmail', placeholder='Nazwa użytkownika', required, autofocus)
+      input.form-control(type='password', name='password', id='inputPassword', placeholder='Hasło')
+      button.btn.btn-lg.btn-primary.btn-block(type='submit') Zaloguj
