@@ -53,7 +53,7 @@ const markAnswer = (req, res) => {
     };
     res.status(200);
     let result = ocena(req.session.colorsArray)(req.body.answer);
-    res.send(JSON.stringify(result));
+    res.send(result);
 };
 
 module.exports = {

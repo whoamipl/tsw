@@ -25,8 +25,9 @@ function createGameBoard(len, selector) {
                 contentType: "application/json"
             });
 
-            request.done( data => {
+            request.done(data => {
                 console.log(data);
+                prependResult(data, answers);
             });
 
             request.fail( (jqXHR, statusText) => {
@@ -36,6 +37,13 @@ function createGameBoard(len, selector) {
 
     sendAnswerBtn.appendTo(div);
     $(selector).html(div);
+}
+
+function prependResult(result, answers) {
+    let lastTurn = answers.join(" ");
+    $("<span>Black Points: " + result.black +", White Points: " + result.white+ "</span><span> Last turn: " + lastTurn + "</span></br>").insertBefore($('#game-board')).hide().show('slow');
+    $('input').val('');
+
 }
 
 $(function () {
@@ -70,7 +78,7 @@ $(function () {
             });
             
             request.done((data) => {
-                $('body').prepend(detachedGameBoard);
+                $('body').append(detachedGameBoard);
                 detachedGameParams = gameParams.detach();  
                 createGameBoard(data.colors.length,'#game-board');
             });
