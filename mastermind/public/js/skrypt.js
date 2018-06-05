@@ -41,7 +41,7 @@ function createGameBoard(len, selector) {
 
 function prependResult(result, answers) {
     let lastTurn = answers.join(" ");
-    $("<span>Black Points: " + result.black +", White Points: " + result.white+ "</span><span> Last turn: " + lastTurn + "</span></br>").insertBefore($('#game-board')).hide().show('slow');
+    $("<span>Black Points: " + result.black +", White Points: " + result.white+ "</span><span> Last turn: " + lastTurn + "</span></br>").insertAfter($('#game-board')).hide().show('slow');
     $('input').val('');
 
 }

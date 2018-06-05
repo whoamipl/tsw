@@ -15,9 +15,7 @@ const newGame = (req, res) => {
 const markAnswer = (req, res) => {
     const ocena = (code) => {
         return (move) => {
-            console.log(move);
-            let markedInCode = [];
-            let markedInMove = [];
+            let marked = [];
             let result = {
                 black: 0,
                 white: 0
@@ -32,20 +30,12 @@ const markAnswer = (req, res) => {
             }
 
             code.forEach((el,index) => {
-                if (markedInCode.indexOf(el) !== -1 && markedInMove.indexOf(el) !== -1) {
-                    if (el === move[index]) {
-                        markedInCode.push(index);
-                        markedInMove.push(index);
-                        result.black++;
-                    } 
-                    if (el !== move[index]) {
-                        if (move.indexOf(el) !== -1) {
-                            markedInCode.push(index);
-                            markedInMove.push(move.indexOf(el));                            
-                            result.white++;
-                        }
-                    }
-                 }
+                if (el == move[index]) {
+                    result.black++;
+                    marked.push(el);
+                }
+                else if (move.includes(el) && !marked.includes(el)) 
+                    result.white++;
             });
             console.log(result);
             return JSON.stringify({ black: result.black, white: result.white});
