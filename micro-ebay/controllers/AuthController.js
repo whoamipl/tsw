@@ -6,7 +6,6 @@ let User = require("../models/user");
 let userController = {};
 
 const passportConfig = { 
-    successRedirect: '/',
     failureRedirect: '/login' 
 };
 

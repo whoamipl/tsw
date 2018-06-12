@@ -10,7 +10,7 @@ let usersRouter = require('./routes/users');
 let app = express();
 
 let mongoose = require('mongoose');
-let mongoDb = 'mongodb://localhost/ubay-db';
+let mongoDb = 'mongodb://localhost/ubaydb';
 let passport = require('passport');
 let LocalStrategy = require('passport-local').Strategy;
 
