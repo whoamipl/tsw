@@ -10,7 +10,7 @@ html
       button.navbar-toggler(type='button', data-toggle='collapse', data-target='#login-form', aria-controls="login-form" aria-expanded="true" aria-label="Toggle navigation")
         span.navbar-toggler-icon
       div.collapse.navbar-collapse(id='login-form')
-        div.navbar-collapse.collapse.w-100.order-3.dual-collapse2
+        div.navbar-collapse.collapse.w-100.order-.dual-collapse2
           ul.navbar-nav.ml-auto
             if (!user)
               li.nav-item
@@ -18,10 +18,11 @@ html
               li.nav-item
                 a.nav-link(href='/register') Zarejestruj
             if (user)
-              li.nav-item
-                a.nav-link Witaj #{user.name}
-              li.nav-item
-                a.nav-link(href='/logout') Wyloguj
+              li.nav-item.dropdown
+                a/.nav-link.dropdown-toggle(data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false") Twój µBay 
+                  div.dropdown-menu
+                    a.dropdown-item(href="#") Twoje konto
+                    a.dropdown-item(href='/logout') Wyloguj
     div.content
       block content
     script(src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous")

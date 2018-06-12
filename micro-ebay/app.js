@@ -10,7 +10,7 @@ let usersRouter = require('./routes/users');
 let app = express();
 
 let mongoose = require('mongoose');
-let mongoDb = 'mongodb://localhost/ubay-db';
+let mongoDb = 'mongodb://localhost/ubaydb';
 let passport = require('passport');
 let LocalStrategy = require('passport-local').Strategy;
 
@@ -41,7 +41,7 @@ app.use(require('express-session')({
 app.use(passport.initialize());
 app.use(passport.session());
 
-let User = require('./models/user');
+let User = require(path.join(__dirname, 'models/user'));
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
