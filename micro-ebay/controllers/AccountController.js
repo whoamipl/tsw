@@ -3,10 +3,8 @@ let mongoose = require("mongoose");
 let User = require("../models/user");
 let accountController = {};
 
-accountController.accountDetails = (req, res) => {
-    passport.authenticate('local')(req, res,() => {
-        res.render('account');
-    });
+accountController.showAccountDetails = function (req, res, next) {
+    res.render('account', {user: req.user});
 };
 
 module.exports = accountController;

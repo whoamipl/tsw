@@ -18,10 +18,12 @@ html
               li.nav-item
                 a.nav-link(href='/register') Zarejestruj
             if (user)
-              li.nav-item
-                a.nav-link Witaj #{user.name}
-              li.nav-item
-                a.nav-link(href='/logout') Wyloguj
+              li.nav-item.dropdown
+                a.nav-link.dropdown-toggle(data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false") Twój µBay
+                  div.dropdown-menu
+                    a.dropdown-item(href="/user/account") Twoje konto
+                    a.dropdown-item(href="/user/auctions") Twoje aukcje
+                    a.dropdown-item(href="/logout") Wyloguj
     div.content
       block content
     script(src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous")
