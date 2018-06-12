@@ -2,13 +2,8 @@
 let mongoose = require("mongoose");
 let passport = require("passport");
 let User = require("../models/user");
-
+let passportConfig = require("../config/passportConfig");
 let userController = {};
-
-const passportConfig = { 
-    successRedirect: '/',
-    failureRedirect: '/login' 
-};
 
 // Restrict access to root page
 userController.home = (req, res) => {
@@ -26,7 +21,6 @@ userController.doRegister = (req, res) => {
     if (err) {
       return res.render('register', { user : user });
     }
-
     passport.authenticate('local')(req, res,() => {
       res.redirect('/');
     });
