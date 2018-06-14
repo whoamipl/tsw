@@ -1,3 +1,25 @@
 extends layout
 block content
-    h1 User account view
+    div.container
+        form
+            div.form-group
+                label(for="username") Nazwa użytkownika: 
+                input#username.form-control(type="text" value=user.username disabled="true")
+            div.form-group
+                label(for="firstname") Imię: 
+                input#firstname.form-control(type="text" value=user.firstName)
+            div.form-group
+                label(for="lastname") Nazwisko: 
+                input#lastname.form-control(type="text" value=user.lastName)
+            div.form-group
+                label(for="email") Adres e-mail:
+                input#email.form-control(type="email" value=user.eMail)
+            div.form-group
+                label(for="phone-number") Numer telefonu:
+                input#phone-number.form-control(type="text" value=user.phoneNumber)
+            div.form-group.row
+                label(for="adresses") 
+                select#adresses.form-control.
+                    each val in user.adresses
+                        option= val
+                button#add-addres.btn-primary Dodaj adres

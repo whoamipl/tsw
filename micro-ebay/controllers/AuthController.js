@@ -21,9 +21,23 @@ userController.register = (req, res) => {
 
 // Post registration
 userController.doRegister = (req, res) => {
-  User.register(new User({ username : req.body.username, name: req.body.name }), req.body.password, function(err, user) {
+  User.register(new User({
+     username : req.body.username, 
+     firstName: req.body.firstname,
+     lastName: req.body.lastname,
+     eMail: req.body.email,
+     phoneNumber: req.body.phonenumber
+    }), req.body.password, function(err, user) {
     if (err) {
-      return res.render('register', { user : user });
+      if (err.name == "UserExistsError")
+        return res.render('register', {message : "Taki użytkownik już istnieje!"});
+      else if (err.name == "MissingPasswordError")
+        return res.render('register', {message : "Nie podano hasła!"});
+      else if (err.name == "MissingUsernameError")
+        return res.render('register', {message : "Nie podano nazwy użytkownika!"});
+      else {
+        return res.render('register', {message : "Nieznany błąd!"});
+      }
     }
 
     passport.authenticate('local')(req, res,() => {

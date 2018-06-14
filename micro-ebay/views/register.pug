@@ -1,10 +1,33 @@
 extends layout
-
+block addtionalscripts
+  script(src="/javascripts/passval.js")
 block content
   .container
+    if (message)
+      div.alert.alert-danger #{message}
     form.form-signin(role='form', action="/register",method="post", style='max-width: 300px;')
       h2.form-signin-heading Rejestracja
-      input.form-control(type='text', name="name", placeholder='Imię')
-      input.form-control(type='text', name="username", placeholder='Nazwa użytkownika')
-      input.form-control(type='password', name="password", placeholder='Hasło')
+      div.form-group
+        label(for="username") Nazwa użytkownika: 
+        input#username.form-control(type="text" name="username")
+      div.form-group
+        label(for="firstname") Imię: 
+        input#firstname.form-control(type="text" name="firstname")
+      div.form-group
+        label(for="lastname") Nazwisko: 
+        input#lastname.form-control(type="text" name="lastname")
+      div.form-group
+        label(for="email") Adres e-mail:
+        input#email.form-control(type="email" name="email")
+      div.form-group
+        label(for="phone-number") Numer telefonu:
+        input#phone-number.form-control(type="text" name="phonenumber")
+      div.form-group
+        label(for="passwordFirst") Podaj hasło: 
+        input#passwordFirst.form-control(type="password" name="password")
+      div.form-group
+        label(for="passwordSecond") Powtórz hasło: 
+        input#passwordSecond.form-control(type="password")  
       button.btn.btn-lg.btn-primary.btn-block(type='submit') Zarejestruj
+      //dodawanie adresu
+  
