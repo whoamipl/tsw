@@ -7,7 +7,7 @@ html
     block addtionalscripts
   body
     nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
-      a.navbar-brand(href='#') µBay
+      a.navbar-brand(href='/') µBay
       button.navbar-toggler(type='button', data-toggle='collapse', data-target='#login-form', aria-controls="login-form" aria-expanded="true" aria-label="Toggle navigation")
         span.navbar-toggler-icon
       div.collapse.navbar-collapse(id='login-form')
@@ -22,11 +22,12 @@ html
               li.nav-item.dropdown
                 a.nav-link.dropdown-toggle(data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false") Twój µBay
                   div.dropdown-menu
-                    a.dropdown-item(href="/user/account") Twoje konto
-                    a.dropdown-item(href="/user/auctions") Twoje aukcje
+                    a.dropdown-item(href="/user/account/") Twoje konto
+                    a.dropdown-item(href="/items/your/all") Twoje przedmioty
+                    a.dropdown-item(href="/items/add") Wystaw przedmiot
                     a.dropdown-item(href="/logout") Wyloguj
               li.nav-item
-                a.nav-link(href="#"): span.glyphicon.glyphicon-bel
+                a.nav-link(href="#"): span.glyphicon.glyphicon-bell
     div.content
       block content
     script(src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous")

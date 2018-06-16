@@ -1,6 +1,7 @@
 //jshint esversion: 6
 let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
+let addressSchema = require('./address').schema;
 let passportLocalMongoose = require('passport-local-mongoose');
 let UserSchema = new Schema({
     username: String,
@@ -9,7 +10,7 @@ let UserSchema = new Schema({
     lastName: String,
     phoneNumber: String,
     eMail: String,
-    adresses: [{type: Schema.Types.ObjectId, ref: "Addres"}],
+    addresses: [addressSchema],
     items: [{type: Schema.Types.ObjectId, ref: "Item"}]
 });
 
