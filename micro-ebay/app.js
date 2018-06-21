@@ -6,6 +6,7 @@ let cookieParser = require('cookie-parser');
 let logger = require('morgan');
 let indexRouter = require('./routes/index');
 let userRouter = require('./routes/user');
+let itemsRouter = require('./routes/items');
 
 let app = express();
 
@@ -48,6 +49,7 @@ passport.deserializeUser(User.deserializeUser());
 
 app.use('/', indexRouter);
 app.use('/user', userRouter);
+app.use('/items', itemsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

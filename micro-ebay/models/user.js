@@ -2,15 +2,17 @@
 let mongoose = require('mongoose');
 let path = require('path');
 let Schema = mongoose.Schema;
+let addressSchema = require('./address').schema;
 let passportLocalMongoose = require('passport-local-mongoose');
-let address = require(path.join(__dirname,'adress'));
-
 let UserSchema = new Schema({
     username: String,
     password: String,
+    firstName: String,
+    lastName: String,
     phoneNumber: String,
-    email: String,
-    adresses: [{type: Schema.Types.ObjectId, ref: address}]
+    eMail: String,
+    addresses: [addressSchema],
+    items: [{type: Schema.Types.ObjectId, ref: "Item"}]
 });
 
 UserSchema.plugin(passportLocalMongoose);
