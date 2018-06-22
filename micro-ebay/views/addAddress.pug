@@ -1,7 +1,7 @@
 extends layout
 block content
     div.container
-        form(action="add/new" method="post")
+        form.mt-5(action="add/new" method="post")
             div.form-group
                 label(for="street") Ulica: 
                 input#street.form-control(type="text" name="street")
@@ -14,5 +14,5 @@ block content
             div.form-group
                 label(for="zip-code") Kod pocztowy:
                 input#zip-code.form-control(type="text" name="zip")
-            button.form-group.btn-primary(type="submit") Dodaj
-            button.form-group.btn-danger(type="reset") Wyczyść
+            button.form-group.btn.m-1.btn-primary(type="submit") Dodaj
+            button.form-group.btn.m-1.btn-danger(type="reset") Wyczyść

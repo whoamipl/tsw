@@ -2,6 +2,7 @@
 let mongoose = require("mongoose");
 let passport = require("passport");
 let User = require("../models/user");
+let Item = require("../models/item");
 
 let userController = {};
 
@@ -11,10 +12,14 @@ const passportConfig = {
 
 // Restrict access to root page
 userController.home = (req, res) => {
-  res.render('index', { user : req.user });
-};
-
-// Go to registration page
+  Item.find()
+    .sort('-date')
+    .limit(6)
+    .exec((err, items) => {
+      res.render('index', { user : req.user, items: items });
+    });
+  }
+// Go to registrtion page
 userController.register = (req, res) => {
   res.render('register');
 };

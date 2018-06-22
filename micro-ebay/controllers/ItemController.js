@@ -1,39 +1,59 @@
 // jshint esversion: 6
-let mongoose = require("mongoose");
-let User = require("../models/user");
-let Item = require("../models/item");
+let mongoose = require('mongoose');
+let Item = require('../models/item');
+let User = require('../models/user');
+let fs = require('fs');
+let multer = require('multer');
 let itemController = {};
 
-itemController.getAllItems = (req, res, next) => {
-    res.send(500);
+itemController.addNewItemView = (req, res, next) => {
+    res.render('addItem', {user: req.user});
 };
 
-itemController.getLatestItems = (req, res, next) => {
-    res.render('userItems', {user: req.user});
-};
+itemController.addNewItem = (req, res, next) => {
+    if (req.body) {
+        try {
+            let newItem = new Item();
+            newItem.title = req.body.title;
+            newItem.img.data = fs.readFileSync(req.file.path);
+            newItem.img.filename = req.file.filename;
+            console.log(req.file.filename);
+            newItem.img.contentType = 'image/png';
+            newItem.price = req.body.price;
+            newItem.description = req.body.description;
+            if(req.body.buyNow === 'on') {
+                newItem.isBuyNow = true;
+            } 
+            else {
+                newItem.isBuyNow = false;
+                newItem.dateEnd = new Date(req.body.endDate).setHours(23);
+            }
+            newItem.save((err, data) => {
+                console.log(data);
+                console.log(err);
+            });
 
-itemController.getItemById = (req, res, next) => {
-    res.render('userItems', {user: req.user});
-};
-
-itemController.getUserItemById = (req, res, next) => {
-    res.sendStatus(501);
+            User.findOne({'_id' : req.user.id},
+            (err, user) => {
+                if (err) console.log(err);     
+                user.items.push(newItem);   
+                user.save((err,data) => {
+                    res.render('addItem', {user: req.user, message: data});
+                });
+            });
+        }
+        catch (err) {
+            console.log(err);
+        }
+    }
 };
 
 itemController.getAllUserItems = (req, res, next) => {
-    res.render('userItems');
+    User.find({_id: req.user.id})
+        .populate('items')
+        .exec((err, itemList) => {
+            console.log(itemList);
+            res.render('userItems', {user: req.user, items: itemList[0].items});
+        });
 };
-
-itemController.addNewItemView = (req, res, next) => {
-    console.log(res.render('newItem', {user: req.user}));
-};
-
-itemController.editItemView = (req, res, next) => {
-    res.render('editItem', {user: req.user});
-};
-
-itemController.removeItem = (req, res, next) => {
-    res.sendStaus(501);
-};
-
 module.exports = itemController;

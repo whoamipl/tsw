@@ -6,12 +6,12 @@ let cookieParser = require('cookie-parser');
 let logger = require('morgan');
 let indexRouter = require('./routes/index');
 let userRouter = require('./routes/user');
-let itemsRouter = require('./routes/items');
+let itemRouter = require('./routes/item');
 
 let app = express();
 
 let mongoose = require('mongoose');
-let mongoDb = 'mongodb://localhost/ubaydb';
+let mongoDb = 'mongodb://localhost/ubaydbdev';
 let passport = require('passport');
 let LocalStrategy = require('passport-local').Strategy;
 
@@ -49,7 +49,7 @@ passport.deserializeUser(User.deserializeUser());
 
 app.use('/', indexRouter);
 app.use('/user', userRouter);
-app.use('/items', itemsRouter);
+app.use('/item', itemRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

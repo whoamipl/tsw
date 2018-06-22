@@ -1,5 +1,14 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  div.container.mt-5
+    h1 Najnowsze przedmioty
+    div.jumbotron.mt-1
+      div.card-group
+        each item in items
+          div.card
+            img.card-img-top(scr="http://localhost:3000/photos/no-image.png")
+            div.card-body
+              h5.card-title=item.title
+              p.card-text 00:00:00
+

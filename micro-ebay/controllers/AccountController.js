@@ -11,7 +11,6 @@ accountController.showAccountDetails = (req, res, next) => {
 };
 
 accountController.addUserAddressView = (req, res, next) => {
-    console.log(req.user.addresses)
     res.render('addAddress', {
         user: req.user
     });
@@ -25,7 +24,8 @@ accountController.addUserAddress = (req, res, next) => {
             city: req.body.city,
             zip: req.body.zip
         });
-        User.findOne({'_id': req.user.id}, (err, user) => {
+        User.findOne({'_id': req.user.id}, 
+        (err, user) => {
             user.addresses.push(newAddress);
             user.save((err, data) => {
                 res.render('addAddress', {user: req.user, message: data});
