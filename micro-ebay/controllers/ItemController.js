@@ -6,6 +6,50 @@ let fs = require('fs');
 let multer = require('multer');
 let itemController = {};
 
+itemController.getAll = (req, res, next) => {
+    try {
+        let perPage = 3;
+        let page = req.query.page > 0 ? req.query.page : 0;
+        console.log(page);
+        res.locals.createPagination = function (pages, page) {
+            let url = require('url');
+            let qs = require('querystring');
+            let params = qs.parse(url.parse(req.url).query);
+            let paginationList = '';
+            
+            params.page = 0;
+            paginationList += '<li class="page-item"><a href="?'+qs.stringify(params)+'" class="page-link">Pierwsza</a></li>';
+            for (var p = 1; p < pages; p++) {
+              params.page = p;
+              paginationList += '<li class="page-item"><a href="?'+qs.stringify(params)+'"class="page-link">'+ p +'</a></li>';
+            }
+            params.page = --p;
+            paginationList += '<li class="page-item"><a href="?'+qs.stringify(params)+'" class="page-link" >Ostatnia</a></li>';
+          
+            return paginationList;
+          };
+        Item
+            .find()
+            .limit(perPage)
+            .skip(perPage * page)
+            .sort({dateStart: 'desc'})
+            .exec((err, items ) => {
+                Item
+                    .count()
+                    .exec((err, count) => {
+                        res.render('allItems', 
+                        { user: req.user, 
+                          items: items, 
+                          page: page, 
+                          pages: count / perPage
+                        });
+                    });
+            });
+    } catch (err) {
+        console.log(err);
+    }
+};
+
 itemController.addNewItemView = (req, res, next) => {
     res.render('addItem', {user: req.user});
 };
@@ -66,6 +110,4 @@ itemController.getItemById = (req, res, next) => {
     });
 };
 
-itemController.getAllItems = (req, res, next) => {
-};
 module.exports = itemController;

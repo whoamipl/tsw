@@ -20,10 +20,10 @@ let storage = multer.diskStorage({
 let upload = multer({storage: storage});
 
 router.get('/add', ensure, itemController.addNewItemView);
-router.post('/add/', ensure, upload.single('photo'), itemController.addNewItem);
+router.post('/add', ensure, upload.single('photo'), itemController.addNewItem);
 router.get('/your/all', ensure, itemController.getAllUserItems);
 router.get('/:id', itemController.getItemById);
-router.get('/all', itemController.getAllItems);
+router.get('/items/all', itemController.getAll);
 
 module.exports = router;
 

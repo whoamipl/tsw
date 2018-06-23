@@ -1,15 +1,16 @@
 extends layout
 block content
-    h1.m-1 Twoje przedmioty
-    div.container.mt-5
-        if (items)
-            each item, i in items
+    h1.m-1 Wszystkie przedmioty
+        div.container.mt-5
+            each item in items
                 li.list-group-item
                     div.row
                         div.col-md-3
                             img.img-thumbnail(src='http://localhost:3000/photos/' + item.img.filename)
                         div.col.text-center.mt-auto.mb-auto=item.title
                         div.col.text-center.mt-auto.mb-auto
-                            a(href='http://localhost:3000/item/'+item.id) Zobacz przedmiot
-        else
-            h1.mt-auto.mb-auto Nie masz żadnych przedmiotów
+                            a(href='http://localhost:3000/item/'+item.id) Zobacz przedmiot                
+    if (pages > 1)
+        nav.d-flex.justify-content-center
+            ul.pagination
+             != createPagination(pages, page)
