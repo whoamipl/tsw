@@ -1,14 +1,31 @@
 extends layout
-
 block content
   div.container.mt-5
     h1 Najnowsze przedmioty
     div.jumbotron.mt-1
       div.card-group
         each item in items
-          div.card
-            img.card-img-top(scr="http://localhost:3000/photos/no-image.png")
+          div.card.m-1
+            if (item.img.filename)
+              img.card-img-top(src="http://localhost:3000/photos/" + item.img.filename style="max-height:193px; max-width:252px" )
+            else 
+              img.card-img-top(src="http://localhost:3000/photos/no-image.png" alt="No image")
             div.card-body
               h5.card-title=item.title
-              p.card-text 00:00:00
+              if (item.dateEnd)
+                - function prettyDate(date) {
+                  - let monthNames = ['STY', 'LUT', 'MAR', 'KWI', 'MAJ', 'CZE', 'LIP', 'SIE', 'WRZ', 'PAŹ', 'LIS', 'GRU'];
+                  - let daysNames = ['PON', 'WT', 'ŚR','CZW', 'PT' , 'SOB', 'ND'];
+                  - return daysNames[date.getDay()] + ', ' + date.getDate() + ' ' + monthNames[date.getMonth()] + ', ' + date.getFullYear(); 
+                - }
+                p.card-text=prettyDate(item.dateEnd)
+                if (item.price)
+                  p.card-text= 'Aktualna cena: ' + item.price + ' zł'
+                else 
+                  p.card-text= 'Brak ofert'
+              else
+                p.card-text Bezterminowy
+                p.card-text= 'Cena: ' + item.price + ' zł'
+              p.card-text: small.text-muted: a(href="http://localhost:3000/item/" + item._id) Zobacz przedmiot
+    a(class="btn btn-primary btn-lg" href="item/all" role="button") Zobacz więcej
 

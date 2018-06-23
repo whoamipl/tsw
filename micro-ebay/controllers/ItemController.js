@@ -17,10 +17,10 @@ itemController.addNewItem = (req, res, next) => {
             newItem.title = req.body.title;
             newItem.img.data = fs.readFileSync(req.file.path);
             newItem.img.filename = req.file.filename;
-            console.log(req.file.filename);
             newItem.img.contentType = 'image/png';
             newItem.price = req.body.price;
             newItem.description = req.body.description;
+            newItem.owner = req.user.id;
             if(req.body.buyNow === 'on') {
                 newItem.isBuyNow = true;
             } 
@@ -28,22 +28,17 @@ itemController.addNewItem = (req, res, next) => {
                 newItem.isBuyNow = false;
                 newItem.dateEnd = new Date(req.body.endDate).setHours(23);
             }
-            newItem.save((err, data) => {
-                console.log(data);
-                console.log(err);
-            });
+            newItem.save();
 
             User.findOne({'_id' : req.user.id},
-            (err, user) => {
-                if (err) console.log(err);     
+            (err, user) => {   
                 user.items.push(newItem);   
                 user.save((err,data) => {
-                    res.render('addItem', {user: req.user, message: data});
+                    res.render('addItem', {user: req.user});
                 });
             });
         }
         catch (err) {
-            console.log(err);
         }
     }
 };
@@ -55,5 +50,22 @@ itemController.getAllUserItems = (req, res, next) => {
             console.log(itemList);
             res.render('userItems', {user: req.user, items: itemList[0].items});
         });
+};
+
+itemController.getItemById = (req, res, next) => {
+    let isUserItem = false;
+    let itemId = req.params.id;
+    Item.findById(itemId)
+    .exec((err, item) => {
+        if (req.user) {
+            if (item.owner == req.user.id) {
+                isUserItem = true;
+            }
+        }
+        res.render('itemView', {user: req.user, item: item, isUserItem: isUserItem });
+    });
+};
+
+itemController.getAllItems = (req, res, next) => {
 };
 module.exports = itemController;

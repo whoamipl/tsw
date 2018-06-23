@@ -1,0 +1,55 @@
+extends layout
+block content
+    div.mt-5.container
+        h1.mt-1=item.title
+        div.row.mt-5
+            div.col-sm-5
+                if (item.img.filename)
+                    img.img-thumbnail(src='http://localhost:3000/photos/' + item.img.filename)
+                else
+                    img.img-thumbnail(src='http://localhost:3000/photos/no-image.png')
+                console.log('Test')
+            div.col.d-flex.justify-content-center.align-items-center
+                - function prettyDate(date) {
+                    - if (!date) return 'Bezterminowo';
+                    - let monthNames = ['STY', 'LUT', 'MAR', 'KWI', 'MAJ', 'CZE', 'LIP', 'SIE', 'WRZ', 'PAŹ', 'LIS', 'GRU'];
+                    - let daysNames = ['PON', 'WT', 'ŚR','CZW', 'PT' , 'SOB', 'ND'];
+                    - return daysNames[date.getDay()] + ', ' + date.getDate() + ' ' + monthNames[date.getMonth()] + ', ' + date.getFullYear(); 
+                - }
+                - function getTime(date) {
+                    - if (!date) return '';
+                    - if (date.getMinutes() < 10)
+                        return date.getHours() + ':0' + date.getMinutes()
+                    - else
+                        return date.getHours() + ':' + date.getMinutes()
+                - }
+                    if(item.isBuyNow && user && !isUserItem)
+                        button.btn.btn-primary Kup Teraz!
+                        button.btn.btn-success.m-1 Zadaj pytanie
+                    if(!item.isBuyNow && user && !isUserItem)
+                        div.d-flex.flex-column.align-items-center
+                            h5 Data zakończenia aukcji: 
+                            br
+                            span.m-2=prettyDate(item.dateEnd)
+                            if (item.price)
+                                span.m-2='Aktualna cena: ' + item.price
+                            else
+                                span.m-2='Brak ofert'
+                        form.ml-auto.p2
+                            label(for="price") Podaj cenę: 
+                            div.form-group     
+                                input#price(type="number")
+                            button.btn.btn-primary.m-1 Licytuj! 
+                            button.btn.btn-success.m-1 Zadaj pytanie
+                    if (isUserItem || !user)
+                        div.d-flex.flex-column.align-items-center
+                            h5 Data zakończenia aukcji: 
+                            br
+                            span.m-2=prettyDate(item.dateEnd)
+                            span.m-2=getTime(item.dateEnd)
+                            if (item.price)
+                                span.m-2='Cena: ' + item.price
+                            else
+                                span.m-2='Brak ofert' 
+        div.row.mt-5
+            p= item.description

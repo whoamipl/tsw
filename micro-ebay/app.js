@@ -7,11 +7,10 @@ let logger = require('morgan');
 let indexRouter = require('./routes/index');
 let userRouter = require('./routes/user');
 let itemRouter = require('./routes/item');
-
 let app = express();
 
 let mongoose = require('mongoose');
-let mongoDb = 'mongodb://localhost/ubaydbdev';
+let mongoDb = 'mongodb://localhost/ubaydev3';
 let passport = require('passport');
 let LocalStrategy = require('passport-local').Strategy;
 

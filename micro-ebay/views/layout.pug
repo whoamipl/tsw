@@ -5,15 +5,15 @@ html
     link(rel='stylesheet', href='/stylesheets/bootstrap/dist/css/bootstrap.min.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
     link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css")
+    meta(name="viewport" content="width=device-width, initial-scale=1")
     block addtionalscripts
   body
     nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
       a.navbar-brand(href='/') µBay
-      button.navbar-toggler(type='button', data-toggle='collapse', data-target='#login-form', aria-controls="login-form" aria-expanded="true" aria-label="Toggle navigation")
+      button.navbar-toggler(type='button', data-toggle='collapse', data-target='#menu', aria-controls="menu" aria-expanded="true" aria-label="Toggle navigation")
         span.navbar-toggler-icon
-      div.collapse.navbar-collapse(id='login-form')
-        div.navbar-collapse.collapse.w-100.order-3.dual-collapse2
-          ul.navbar-nav.ml-auto
+      div.collapse.navbar-collapse.w-100(id='menu')
+          ul.navbar-nav.ml-auto.w-100.justify-content-end
             if (!user)
               li.nav-item
                 a.nav-link(href='/login') Zaloguj
@@ -29,10 +29,9 @@ html
                     a.dropdown-item(href="/logout") Wyloguj
               li.nav-item
                 a.nav-link(href="#")
-                  span.fa.fa-bell-o Wiadomości (0)
-                  
+                  span.fa.fa-bell-o Wiadomości (0)  
     div.content
       block content
     script(src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous")
     script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous")
-    script(src="/stylesheets/bootstrap/dist/js/bootstrap.min.js")
+    script(src="/stylesheets/bootstrap/dist/js/bootstrap.js")

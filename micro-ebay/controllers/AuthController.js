@@ -13,12 +13,12 @@ const passportConfig = {
 // Restrict access to root page
 userController.home = (req, res) => {
   Item.find()
-    .sort('-date')
-    .limit(6)
+    .sort({dateStart: 'desc'})
+    .limit(4)
     .exec((err, items) => {
       res.render('index', { user : req.user, items: items });
     });
-  }
+  };
 // Go to registrtion page
 userController.register = (req, res) => {
   res.render('register');
