@@ -1,7 +1,7 @@
 extends layout
 block content
     div.container
-        form
+        form.mt-5
             div.form-group
                 label(for="title") Nazwa użytkownika: 
                 input#username.form-control(type="text" value=user.username disabled="true")
@@ -23,4 +23,4 @@ block content
                     select#adresses.form-control.col-sm-10
                         each val in user.addresses
                             option= val.street + ', ' + val.city
-                    button#add-addres.btn-primary.col-sm-2: a(href="address/add") Dodaj adres
+                    button#add-addres.btn.btn-primary.col-sm-2.ml-1: a(href="address/add" style="text-decoration: none; color: white") Dodaj adres

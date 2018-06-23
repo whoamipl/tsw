@@ -1,0 +1,35 @@
+extends layout
+block addtionalscripts 
+    script(src="/javascripts/auction-type.js")
+block content
+    h1.m-1 Dodaj przedmiot
+    div.container
+        form.mt-5(action="add" method="post" enctype="multipart/form-data")
+            div.form-group
+                label(for="title") Tytuł: 
+                input#title.form-control(type="text" name="title")
+            label(for="type") Typ aukcji:
+            div.form-group.form-row
+                div.from-check.col-sm-1.ml-5.mr-2
+                    input.form-check-input.custom-radio(type="radio" name="buyNow" id="buy-now")
+                    label.form-check-label(for="buyNow") Kup teraz!
+                div.from-check.col-sm-1
+                    input.form-check-input.custom-radio(type="radio" name="auction" id="auction")
+                    label.form-check-label(for="auction") Aukcja
+                div#date-picker-ctn.col-sm-5
+                        label#date-picker-lbl(for="date-picker" hidden) Wybierz datę zakończenia: 
+                        input#date-picker.ml-2(hidden type="date" name="endDate")
+            div.form-group
+                label(for="description") Opis przedmiotu:
+                textarea.form-control(rows="4" name="description")
+            div#price-input.form-group
+                label(for="price") Cena:
+                input.form-control(name="price" type="number" step="0.01" min="0")
+            div#picture-dropbox.dropbox.row.text-center.from-group.ml-auto
+                input.input-file.row#picture-input(type="file" accept="image/*" name="photo")
+                div#info Wybierz lub upuść zdjęcie   
+                div.col-md-2.text-center
+                    img#image.img-preview(src="#")
+            button.btn.m-1.form-group.btn-primary(type="submit") Dodaj
+            button.btn.m-1.form-group.btn-danger(type="reset") Wyczyść
+    
