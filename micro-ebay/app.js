@@ -8,6 +8,8 @@ let indexRouter = require('./routes/index');
 let userRouter = require('./routes/user');
 let itemRouter = require('./routes/item');
 let app = express();
+let server = require('http').Server(app);
+let io = require('socket.io')(server);
 
 let mongoose = require('mongoose');
 let mongoDb = 'mongodb://localhost/ubaydev3';
@@ -22,6 +24,11 @@ mongoose.Promise = global.Promise;
 
 let db = mongoose.connection;
 
+// add socket.io to  res in event loop 
+app.use((req, res, next) => {
+  res.io = io;
+  next();
+});
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -66,4 +73,4 @@ app.use((err, req, res, next) => {
   res.render('error');
 });
 
-module.exports = app;
+module.exports = {app: app, server: server};

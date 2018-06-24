@@ -6,10 +6,10 @@ block content
                 li.list-group-item
                     div.row
                         div.col-md-3
-                            img.img-thumbnail(src='http://localhost:3000/photos/' + item.img.filename)
+                            img.img-thumbnail(src='/photos/' + item.img.filename)
                         div.col.text-center.mt-auto.mb-auto=item.title
                         div.col.text-center.mt-auto.mb-auto
-                            a(href='http://localhost:3000/item/'+item.id) Zobacz przedmiot                
+                            a(href='/item/'+item.id) Zobacz przedmiot                
     if (pages > 1)
         nav.d-flex.justify-content-center
             ul.pagination

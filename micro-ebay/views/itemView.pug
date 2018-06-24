@@ -1,13 +1,16 @@
 extends layout
+block addons
+    script(src="/socket.io/socket.io.js")
+    script(src="/javascripts/update-auction.js")
 block content
     div.mt-5.container
         h1.mt-1=item.title
         div.row.mt-5
             div.col-sm-5
                 if (item.img.filename)
-                    img.img-thumbnail(src='http://localhost:3000/photos/' + item.img.filename)
+                    img.img-thumbnail(src='/photos/' + item.img.filename)
                 else
-                    img.img-thumbnail(src='http://localhost:3000/photos/no-image.png')
+                    img.img-thumbnail(src='/photos/no-image.png')
                 console.log('Test')
             div.col.d-flex.justify-content-center.align-items-center
                 - function prettyDate(date) {

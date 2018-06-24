@@ -99,6 +99,9 @@ itemController.getAllUserItems = (req, res, next) => {
 itemController.getItemById = (req, res, next) => {
     let isUserItem = false;
     let itemId = req.params.id;
+    res.io.on('connection', () => {
+        console.log('New user conected');
+    });
     Item.findById(itemId)
     .exec((err, item) => {
         if (req.user) {
