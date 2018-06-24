@@ -1,20 +1,22 @@
 // jshint esversion: 6
-let createError = require('http-errors');
-let express = require('express');
-let path = require('path');
-let cookieParser = require('cookie-parser');
-let logger = require('morgan');
-let indexRouter = require('./routes/index');
-let userRouter = require('./routes/user');
-let itemRouter = require('./routes/item');
-let app = express();
-let server = require('http').Server(app);
-let io = require('socket.io')(server);
-
-let mongoose = require('mongoose');
-let mongoDb = 'mongodb://localhost/ubaydev3';
-let passport = require('passport');
-let LocalStrategy = require('passport-local').Strategy;
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const indexRouter = require('./routes/index');
+const userRouter = require('./routes/user');
+const itemRouter = require('./routes/item');
+const app = express();
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
+const passportSocketIo = require('passport.socketio');
+const session = require('express-session');
+const sessionStore = require('memorystore')(session);
+const mongoose = require('mongoose');
+const mongoDb = 'mongodb://localhost/ubaydev3';
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
 
 mongoose.connect(mongoDb)
   .then(() => console.log('Connection to database successful'))
@@ -24,11 +26,6 @@ mongoose.Promise = global.Promise;
 
 let db = mongoose.connection;
 
-// add socket.io to  res in event loop 
-app.use((req, res, next) => {
-  res.io = io;
-  next();
-});
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -39,10 +36,18 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(require('express-session')({
-  secret: 'some-secret',
+const sessionSecret = 'EE26B0DD4AF7E749AA1A8EE3C10AE9923F618980772E473F8819A5D49';
+const sessionKey = 'express.sid';
+const sessionStorage = new sessionStore({
+  checkPeriod: 86400000
+});
+
+app.use(session({
+  key : sessionKey,
+  secret: sessionSecret,
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
+  store: sessionStorage
 }));
 
 app.use(passport.initialize());
@@ -52,6 +57,33 @@ let User = require(path.join(__dirname, 'models/user'));
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+
+const onAuthorizeSuccess = (data, accept) => {
+  console.log('Udane połaczenie z socket.io');
+  accept();
+};
+
+const onAuthorizeFail = (data, message, error, accept) => {
+  if (error) {
+    throw new Error(message);
+  }
+  console.log('Nieudane połaczenie z socket.io');
+  accept(new Error('Brak autoryzacji'));
+};
+
+io.use(passportSocketIo.authorize({
+  cookieParser: cookieParser,
+  key: sessionKey,
+  secret: sessionSecret,
+  success: onAuthorizeSuccess,
+  fail: onAuthorizeFail,
+  store: sessionStorage
+}));
+
+app.use((req, res, next) => {
+  res.io = io;
+  next();
+});
 
 app.use('/', indexRouter);
 app.use('/user', userRouter);
