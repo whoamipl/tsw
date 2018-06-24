@@ -2,6 +2,7 @@
 let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 let User = require('../models/user');
+let offerSchema = require('../models/offer').schema;
 let ItemSchema = new Schema({
     title: { type: String, required: true },
     img: {date: Buffer, contentType: String, filename: String},
@@ -13,9 +14,9 @@ let ItemSchema = new Schema({
     },
     dateEnd: Date,
     isBuyNow: Boolean,
-    isFinished: Boolean,
+    isFinished: { type: Boolean, default: false },
     owner: {type: Schema.Types.ObjectId, ref: User},
-    auctioners: [{type: Schema.Types.ObjectId, ref: 'User'}]
+    bids: [offerSchema]
 });
 
 module.exports = mongoose.model('Item', ItemSchema);

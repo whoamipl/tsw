@@ -19,10 +19,6 @@ block content
                   - return daysNames[date.getDay()] + ', ' + date.getDate() + ' ' + monthNames[date.getMonth()] + ', ' + date.getFullYear(); 
                 - }
                 p.card-text=prettyDate(item.dateEnd)
-                if (item.price)
-                  p.card-text= 'Aktualna cena: ' + item.price + ' zł'
-                else 
-                  p.card-text= 'Brak ofert'
               else
                 p.card-text Bezterminowy
                 p.card-text= 'Cena: ' + item.price + ' zł'

@@ -2,6 +2,7 @@
 let mongoose = require('mongoose');
 let Item = require('../models/item');
 let User = require('../models/user');
+let Offer = require('../models/offer');
 let fs = require('fs');
 let multer = require('multer');
 let itemController = {};
@@ -99,9 +100,44 @@ itemController.getAllUserItems = (req, res, next) => {
 itemController.getItemById = (req, res, next) => {
     let isUserItem = false;
     let itemId = req.params.id;
-    res.io.on('connection', () => {
-        console.log('New user conected');
+    let userId;
+    if (req.user) {
+        userId = req.user.id;
+    }
+    res.io.on('connection', (socket) => {
+        socket.on('buy now', data => {
+            console.log(data.itemId);
+            let newOffer = new Offer();
+            Item
+                .findById(data.itemId)
+                .exec((err, item) => {
+                    newOffer.user = userId;
+                    newOffer.price = item.price;
+                    newOffer.save();
+                    if (err) console.log(err);
+                    item.isFinished = true;
+                    item.bids.push(newOffer);
+                    console.log(item.bids);
+                    item.save();
+                });
+        });
+
+        socket.on('make bid', data => {
+            let newOffer = new Offer();
+            newOffer.user = userId;
+            newOffer.price = data.price;
+            console.log(newOffer);
+            newOffer.save();
+            Item
+                .findOne({'_id' : data.itemId},
+                (err, item) => {
+                   item.bids.push(newOffer);
+                   item.save((err, data) => {
+                   });
+                });
+        });
     });
+
     Item.findById(itemId)
     .exec((err, item) => {
         if (req.user) {
@@ -109,7 +145,15 @@ itemController.getItemById = (req, res, next) => {
                 isUserItem = true;
             }
         }
-        res.render('itemView', {user: req.user, item: item, isUserItem: isUserItem });
+        let maxPrice = 0;
+        if (item.bids) {
+            
+              item.bids.forEach(bid => {
+                  if (maxPrice < bid.price)
+                      maxPrice = bid.price;
+              });
+        }
+        res.render('itemView', {user: req.user, item: item, isUserItem: isUserItem, maxPrice: maxPrice });
     });
 };
 

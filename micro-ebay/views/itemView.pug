@@ -26,8 +26,9 @@ block content
                     - else
                         return date.getHours() + ':' + date.getMinutes()
                 - }
+                if(!item.isFinished)
                     if(item.isBuyNow && user && !isUserItem)
-                        button.btn.btn-primary Kup Teraz!
+                        button#buy-now-btn.btn.btn-primary Kup Teraz!
                         button.btn.btn-success.m-1 Zadaj pytanie
                     if(!item.isBuyNow && user && !isUserItem)
                         div.d-flex.flex-column.align-items-center
@@ -39,10 +40,10 @@ block content
                             else
                                 span.m-2='Brak ofert'
                         form.ml-auto.p2
-                            label(for="price") Podaj cenę: 
+                            label(for="price-input") Podaj cenę: 
                             div.form-group     
-                                input#price(type="number")
-                            button.btn.btn-primary.m-1 Licytuj! 
+                                input#price-input(type="number")
+                            button#make-bid-btn.btn.btn-primary.m-1 Licytuj! 
                             button.btn.btn-success.m-1 Zadaj pytanie
                     if (isUserItem || !user)
                         div.d-flex.flex-column.align-items-center
@@ -50,9 +51,23 @@ block content
                             br
                             span.m-2=prettyDate(item.dateEnd)
                             span.m-2=getTime(item.dateEnd)
-                            if (item.price)
-                                span.m-2='Cena: ' + item.price
+                            if (maxPrice)
+                                span.m-2= 'Aktualna cena: ' + maxPrice + ' zł'
                             else
                                 span.m-2='Brak ofert' 
+                else
+                    div.d-flex.flex-column.align-items-center
+                        h5 Aukcja zakończona!
         div.row.mt-5
             p= item.description
+    if (item.bids) 
+        div.row.d-flex.justify-content-center
+            div.col-lg-10
+                ul.list-group
+                h5 Oferty:
+                each val in item.bids 
+                    li.list-group-item
+                        span.m-2= val.username 
+                        span.m-2= val.price + 'zł'
+                    
+                

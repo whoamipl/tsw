@@ -12,7 +12,8 @@ const passportConfig = {
 
 // Restrict access to root page
 userController.home = (req, res) => {
-  Item.find()
+  Item
+    .find()
     .sort({dateStart: 'desc'})
     .limit(4)
     .exec((err, items) => {
