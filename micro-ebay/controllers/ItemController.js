@@ -3,6 +3,7 @@ let mongoose = require('mongoose');
 let Item = require('../models/item');
 let User = require('../models/user');
 let Offer = require('../models/offer');
+let Notification = require('../models/notification');
 let fs = require('fs');
 let multer = require('multer');
 let itemController = {};
@@ -101,6 +102,7 @@ itemController.getItemById = (req, res, next) => {
     let isUserItem = false;
     let itemId = req.params.id;
     let userId;
+    let notify = new Notification();
     if (req.user) {
         userId = req.user.id;
     }
@@ -117,7 +119,16 @@ itemController.getItemById = (req, res, next) => {
                     if (err) console.log(err);
                     item.isFinished = true;
                     item.bids.push(newOffer);
-                    console.log(item.bids);
+                    notify.formUser = req.user.username;
+                    notify.message = 'Sprzedałeś przedmiot ' + item.title; 
+                    notify.save();
+                    User
+                        .findById(item.owner)
+                        .exec((err, user) => {
+                            user.notifications.push(notify);
+                            user.hasUnread = true;
+                            user.save();
+                        });
                     item.save();
                 });
         });
@@ -132,6 +143,7 @@ itemController.getItemById = (req, res, next) => {
                 .findOne({'_id' : data.itemId},
                 (err, item) => {
                    item.bids.push(newOffer);
+                   notify.message = 'Nowa oferta w:  ' + item.title;
                    item.save((err, data) => {
                    });
                 });

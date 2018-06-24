@@ -4,6 +4,7 @@ let path = require('path');
 let Schema = mongoose.Schema;
 let addressSchema = require('./address').schema;
 let passportLocalMongoose = require('passport-local-mongoose');
+let notificationSchema = require('./notification').schema;
 let UserSchema = new Schema({
     username: String,
     password: String,
@@ -12,7 +13,9 @@ let UserSchema = new Schema({
     phoneNumber: String,
     eMail: String,
     addresses: [addressSchema],
-    items: [{type: Schema.Types.ObjectId, ref: "Item"}]
+    items: [{type: Schema.Types.ObjectId, ref: "Item"}],
+    notifications: [notificationSchema],
+    hasUnread: {type: Boolean, default: false}
 });
 
 UserSchema.plugin(passportLocalMongoose);

@@ -32,7 +32,23 @@ accountController.addUserAddress = (req, res, next) => {
             });
         });
     }
-   
-    
+};
+
+accountController.userNotifications = (req, res, next) => {
+    let userId = req.user.id;
+    res.io.on('connection', (socket) => {
+        socket.on('read all', () => {
+            User
+                .findById(userId) 
+                .exec((err, user) => {
+                    user.hasUnread = false;
+                    user.notifications.forEach(ntf => {
+                        ntf.isRead = true;
+                    });
+                    user.save();
+                });
+        });
+    });
+    res.render('notifications', {user: req.user});
 };
 module.exports = accountController;

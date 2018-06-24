@@ -7,4 +7,5 @@ let ensure = require('../utils/ensureLogin');
 router.get('/account', ensure, accountController.showAccountDetails);
 router.get('/account/address/add', ensure, accountController.addUserAddressView);
 router.post('/account/address/add/new', ensure, accountController.addUserAddress);
+router.get('/notifications/all', ensure, accountController.userNotifications);
 module.exports = router;
