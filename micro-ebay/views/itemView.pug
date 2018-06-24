@@ -3,6 +3,7 @@ block addons
     script(src="/javascripts/update-auction.js")
 block content
     div.mt-5.container
+        div#too-low.alert.alert-warning(hidden) Twoja oferta jest zbyt niska.
         h1.mt-1=item.title
         div.row.mt-5
             div.col-sm-5
