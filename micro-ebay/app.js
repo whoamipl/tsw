@@ -82,6 +82,23 @@ io.use(passportSocketIo.authorize({
 
 app.use((req, res, next) => {
   res.io = io;
+  res.locals.createPagination = function (pages, page) {
+    let url = require('url');
+    let qs = require('querystring');
+    let params = qs.parse(url.parse(req.url).query);
+    let paginationList = '';
+    
+    params.page = 0;
+    paginationList += '<li class="page-item"><a href="?'+qs.stringify(params)+'" class="page-link">Pierwsza</a></li>';
+    for (var p = 1; p < pages; p++) {
+      params.page = p;
+      paginationList += '<li class="page-item"><a href="?'+qs.stringify(params)+'"class="page-link">'+ p +'</a></li>';
+    }
+    params.page = --p;
+    paginationList += '<li class="page-item"><a href="?'+qs.stringify(params)+'" class="page-link" >Ostatnia</a></li>';
+  
+    return paginationList;
+  };
   next();
 });
 

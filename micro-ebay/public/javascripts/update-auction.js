@@ -6,6 +6,11 @@ document.onreadystatechange = () => {
         let makeBidBtn;
         let url = document.URL;
         let itemId = url.substr(url.lastIndexOf('/') + 1);
+        
+        socket.on('too low price', (data) => {
+            document.getElementById('too-low').hidden = false;
+        });
+
         console.log(itemId);
         if (document.getElementById('buy-now-btn')) {
             buyNowBtn = document.getElementById('buy-now-btn');
