@@ -7,6 +7,7 @@ const logger = require('morgan');
 const indexRouter = require('./routes/index');
 const userRouter = require('./routes/user');
 const itemRouter = require('./routes/item');
+const chatRouter = require('./routes/chat');
 const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
@@ -22,6 +23,7 @@ let Offer = require('./models/offer');
 let Notification = require('./models/notification');
 let Item = require('./models/item');
 let connectUsers = [];
+
 mongoose.connect(mongoDb)
   .then(() => console.log('Connection to database successful'))
   .catch(err => console.log(err));
@@ -85,6 +87,7 @@ io.use(passportSocketIo.authorize({
 }));
 
 io.on('connection', (socket) => {
+  let roomId;
   let userID = socket.request.user.id;
   let username = socket.request.user.username;
   connectUsers.push(userID);
@@ -160,6 +163,20 @@ io.on('connection', (socket) => {
             user.save();
         });
   });
+
+  socket.on('user chat', (userId) => {
+    roomId = userId;
+    socket.room = roomId;
+    socket.join(roomId);
+    console.log('Nowy czat w pokoju ' + roomId);
+  });
+
+  socket.on('chat message', (msg) => {
+    console.log('Nowa wiadomość');
+    console.log(roomId);
+    io.in(roomId).emit('new message', {message: msg.message, user: socket.request.user.username});
+  }); 
+
   socket.on('disconnect', () => {
     console.log("Użytkowik się rozłaczył:" + userID);
     connectUsers.pop(userID);
@@ -190,7 +207,7 @@ app.use((req, res, next) => {
 app.use('/', indexRouter);
 app.use('/user', userRouter);
 app.use('/item', itemRouter);
-
+app.use('/chat', chatRouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

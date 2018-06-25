@@ -30,7 +30,7 @@ block content
                 if(!item.isFinished)
                     if(item.isBuyNow && user && !isUserItem)
                         button#buy-now-btn.btn.btn-primary Kup Teraz!
-                        button.btn.btn-success.m-1 Zadaj pytanie
+                        a.btn.btn-success.m-1(role="button" href="/chat/"+ item.owner) Zadaj pytanie
                     if(!item.isBuyNow && user && !isUserItem)
                         div.d-flex.flex-column.align-items-center
                             h5 Data zakończenia aukcji: 
@@ -45,7 +45,7 @@ block content
                             div.form-group     
                                 input#price-input(type="number")
                             button#make-bid-btn.btn.btn-primary.m-1 Licytuj! 
-                            button.btn.btn-success.m-1 Zadaj pytanie
+                            a.btn.btn-success.m-1(role="button" href="chat/"+ item.owner) Zadaj pytanie
                     if (isUserItem || !user)
                         div.d-flex.flex-column.align-items-center
                             h5 Data zakończenia aukcji: 

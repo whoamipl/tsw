@@ -30,11 +30,13 @@ html
                     a.dropdown-item(href="/item/add") Wystaw przedmiot
                     a.dropdown-item(href="/logout") Wyloguj
               li.nav-item
-                a.nav-link(href="/user/notifications/all")
-                  if(user.hasUnread)
-                    span(style="color: red")#ntf-bell.fa.fa-bell-o  Powiadomienia
-                  else
-                    span#ntf-bell.fa.fa-bell-o Powiadomnienia
+                  a.nav-link(href="/user/notifications/all")
+                    if(user.hasUnread)
+                      span(style="color: red")#ntf-bell.fa.fa-bell-o  Powiadomienia
+                    else
+                      span#ntf-bell.fa.fa-bell-o &nbsp; Powiadomnienia
+              a.nav-link(href="/chat/" + user.id)
+                  span#ntf-env.fa.fa-envelope &nbsp; Chat
     div.content
       block content
     script(src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous")
