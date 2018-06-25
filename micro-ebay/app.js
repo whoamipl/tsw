@@ -14,10 +14,14 @@ const passportSocketIo = require('passport.socketio');
 const session = require('express-session');
 const sessionStore = require('memorystore')(session);
 const mongoose = require('mongoose');
-const mongoDb = 'mongodb://localhost/ubaydev3';
+const mongoDb = 'mongodb://localhost/ubaydev0';
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-
+const bodyParser = require('body-parser');
+let Offer = require('./models/offer');
+let Notification = require('./models/notification');
+let Item = require('./models/item');
+let connectUsers = [];
 mongoose.connect(mongoDb)
   .then(() => console.log('Connection to database successful'))
   .catch(err => console.log(err));
@@ -80,8 +84,89 @@ io.use(passportSocketIo.authorize({
   store: sessionStorage
 }));
 
+io.on('connection', (socket) => {
+  let userID = socket.request.user.id;
+  let username = socket.request.user.username;
+  connectUsers.push(userID);
+  console.log(connectUsers);
+  console.log('Użytkownik się podłaczył:' + userID);
+  socket.on('buy now', data => {
+      let newOffer = new Offer();
+      let notify = new Notification();
+      Item
+          .findById(data.itemId)
+          .exec((err, item) => {
+              newOffer.user = username;
+              newOffer.price = item.price;
+              newOffer.save();
+              item.isFinished = true;
+              item.bids.push(newOffer);
+              notify.fromUser = username;
+              notify.message = 'Sprzedałeś przedmiot ' + item.title; 
+              notify.save();
+              User
+                  .findById(item.owner)
+                  .exec((err, user) => {
+                      user.notifications.push(notify);
+                      user.hasUnread = true;
+                      user.save();
+                  });
+              item.save();
+          });
+  });
+
+  socket.on('make bid', data => {
+      let newOffer = new Offer();
+      let notify = new Notification();
+      let username = socket.request.user.username;
+      
+      Item
+          .findById(data.itemId)
+          .exec((err, item) => {
+                  newOffer.user = username;
+                  newOffer.price = data.price;
+                  if (data.price <= Math.max.apply(null, item.bids.map((bid) => bid.price))) {
+                    socket.emit('too low price', {msg: 'Twoja oferta jest zbyt niska!'});
+                    return;
+                  }
+                  newOffer.save();
+                  item.bids.push(newOffer);
+                  notify.formUser = username;
+                  notify.message = 'Nowa oferta w:  ' + item.title;
+                  notify.save();
+                  User
+                      .findById(item.owner)
+                      .exec((err, user) => {
+                          user.notifications.push(notify);
+                          user.hasUnread = true;
+                          user.save();
+                  });
+                  if (connectUsers.includes(item.owner)) {
+
+                  }
+                  item.save();
+                  socket.emit('offer made');
+          });
+  });
+
+  socket.on('read all', () => {
+    User
+        .findById(userID) 
+        .exec((err, user) => {
+            user.hasUnread = false;
+            user.notifications.forEach(ntf => {
+                ntf.isRead = true;
+            });
+            user.save();
+        });
+  });
+  socket.on('disconnect', () => {
+    console.log("Użytkowik się rozłaczył:" + userID);
+    connectUsers.pop(userID);
+  });
+  
+});
 app.use((req, res, next) => {
-  res.io = io;
   res.locals.createPagination = function (pages, page) {
     let url = require('url');
     let qs = require('querystring');
@@ -122,4 +207,4 @@ app.use((err, req, res, next) => {
   res.render('error');
 });
 
-module.exports = {app: app, server: server};
+module.exports = {app: app, server: server, io: io};

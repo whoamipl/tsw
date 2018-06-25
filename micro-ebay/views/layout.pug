@@ -7,6 +7,7 @@ html
     link(rel='stylesheet', href='/stylesheets/style.css')
     link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css")
     meta(name="viewport" content="width=device-width, initial-scale=1")
+    script(src="/javascripts/connect.js")
     block addons
   body
     nav.navbar.navbar-expand-lg.navbar-dark.bg-primary
@@ -31,9 +32,9 @@ html
               li.nav-item
                 a.nav-link(href="/user/notifications/all")
                   if(user.hasUnread)
-                    span(style="color: red")#ntf-bell.fa.fa-bell-o 
+                    span(style="color: red")#ntf-bell.fa.fa-bell-o  Powiadomienia
                   else
-                    span#ntf-bell.fa.fa-bell-o 
+                    span#ntf-bell.fa.fa-bell-o Powiadomnienia
     div.content
       block content
     script(src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous")

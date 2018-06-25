@@ -4,6 +4,7 @@ block addons
 block content
     div.mt-5.container
         div#too-low.alert.alert-warning(hidden) Twoja oferta jest zbyt niska.
+        div#offer-made.alert.alert-success(hidden) Twoja oferta została złożona.
         h1.mt-1=item.title
         div.row.mt-5
             div.col-sm-5
@@ -35,11 +36,11 @@ block content
                             h5 Data zakończenia aukcji: 
                             br
                             span.m-2=prettyDate(item.dateEnd)
-                            if (item.price)
-                                span.m-2='Aktualna cena: ' + item.price
+                            if (maxPrice)
+                                span.m-2='Aktualna cena: ' + maxPrice
                             else
                                 span.m-2='Brak ofert'
-                        form.ml-auto.p2
+                        div.ml-auto.p2
                             label(for="price-input") Podaj cenę: 
                             div.form-group     
                                 input#price-input(type="number")
@@ -69,5 +70,5 @@ block content
                     li.list-group-item
                         span.m-2= val.username 
                         span.m-2= val.price + 'zł'
-                    
+                
                 

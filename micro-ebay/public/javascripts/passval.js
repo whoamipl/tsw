@@ -7,7 +7,7 @@ document.onreadystatechange = () => {
         let first = getById('passwordFirst'); 
         let second = getById('passwordSecond');
 
-        second.addEventListener('keydown',(e) => {
+        second.addEventListener('keyup',(e) => {
             if (e.target.value !== first.value) {
                 second.classList.add('border', 'border-danger');
             }   
